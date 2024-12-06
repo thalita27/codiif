@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+public class Main {
+    private int numero;
+    private String nome;
+    private double saldo;
+    private double limiteSaque;
+
+    public Main(int numero, String nome, double saldo, double limiteSaque) {
+        this.numero = numero;
+        this.nome = nome;
+        this.saldo = saldo;
+        this.limiteSaque = limiteSaque;
+    }
+
+    public void sacar(double valor) {
+        if (valor > saldo) {
+            System.out.println("Saldo insuficiente.");
+        } else if (valor > limiteSaque) {
+            System.out.println("Valor do saque excede o limite.");
+        } else {
+            saldo -= valor;
+            System.out.println("Saque realizado com sucesso. Saldo atual: R$" + saldo);
+        }
+    }
+
+    public void depositar(double valor) {
+        saldo += valor;
+        System.out.println("Depósito realizado com sucesso. Saldo atual: R$" + saldo);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o número da conta: ");
+        int numero = scanner.nextInt();
+        System.out.print("Digite o nome do cliente: ");
+        String nome = scanner.next();
+        System.out.print("Digite o saldo inicial: ");
+        double saldo = scanner.nextDouble();
+        System.out.print("Digite o limite para saque: ");
+        double limiteSaque = scanner.nextDouble();
+
+        Main conta = new Main(numero, nome, saldo, limiteSaque);
+
+        System.out.println("\nConta criada com sucesso!");
+
+        while (true) {
+            System.out.println("\nSelecione uma opção:");
+            System.out.println("1 - Sacar");
+            System.out.println("2 - Depositar");
+            System.out.println("3 - Sair");
+            int opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o valor a ser sacado: ");
+                    double valorSaque = scanner.nextDouble();
+                    conta.sacar(valorSaque);
+                    break;
+                case 2:
+                    System.out.print("Digite o valor a ser depositado: ");
+                    double valorDeposito = scanner.nextDouble();
+                    conta.depositar(valorDeposito);
+                    break;
+                case 3:
+                    System.out.println("Encerrando o programa.");
+                    System.exit(0);
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+    }
+}
